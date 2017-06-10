@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using ExcelXML;
 using System.Diagnostics;
+using System.IO;
 
-namespace Cmd
+namespace CmdCore
 {
     class Program
     {
         private static string _basePath;
-        
-        public static void DoStuff()
-        {
-        }
-        
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
             string path = @"C:\Users\Mateus\Desktop\stuff\Book1.xlsx";
-            var tempBase = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tmp");
+            var tempBase = Path.Combine(AppContext.BaseDirectory, "tmp");
             _basePath = Path.Combine(tempBase, Guid.NewGuid().ToString());
+
             int gen0 = GC.CollectionCount(0), gen1 = GC.CollectionCount(1), gen2 = GC.CollectionCount(2);
             var stopwatch = Stopwatch.StartNew();
             using (var file = ExcelFile.LoadFromTemplate(path))
@@ -56,8 +51,5 @@ namespace Cmd
 
             return data;
         }
-        
     }
-
-
 }

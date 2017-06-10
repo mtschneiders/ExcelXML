@@ -6,7 +6,7 @@ using System.IO.Compression;
 using System.Text;
 using System.Xml.Linq;
 
-namespace ExcelXML
+namespace CmdCore
 {
     public class ExcelFile : IDisposable
     {

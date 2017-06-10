@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ConvertUtil.cs" />
     <Compile Include="ExcelFile.cs" />
+    <Compile Include="ExcelUtil.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
