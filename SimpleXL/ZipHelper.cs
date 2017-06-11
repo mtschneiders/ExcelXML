@@ -2,7 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 
-namespace ExcelXML
+namespace SimpleXL
 {
     public static class ZipHelper
     {

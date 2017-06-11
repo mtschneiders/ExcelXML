@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExcelXML
+namespace SimpleXL
 {
     internal static class Extensions
     {

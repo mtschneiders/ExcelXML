@@ -7,7 +7,7 @@ using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Attributes.Jobs;
 using System.Linq;
 
-namespace ExcelXML.Benchmark
+namespace SimpleXL.Benchmark
 {
     [MemoryDiagnoser]
     [DryJob]
