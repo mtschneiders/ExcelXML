@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelXML", "ExcelXML\ExcelXML.csproj", "{7D400A9C-8002-4807-A445-E82255CEF74B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleXL", "SimpleXL\SimpleXL.csproj", "{7D400A9C-8002-4807-A445-E82255CEF74B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cmd", "Cmd\Cmd.csproj", "{28068A96-797D-4FB5-9430-A0DDE91B7DA6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Benchmark\Benchmark.csproj", "{28068A96-797D-4FB5-9430-A0DDE91B7DA6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmdCore", "CmdCore\CmdCore.csproj", "{BF5393B5-D823-4815-89B6-3A56C3744E71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cmd", "Cmd\Cmd.csproj", "{3FCB84B4-EE01-4855-B7F3-215C2959BABD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{BF5393B5-D823-4815-89B6-3A56C3744E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF5393B5-D823-4815-89B6-3A56C3744E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF5393B5-D823-4815-89B6-3A56C3744E71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FCB84B4-EE01-4855-B7F3-215C2959BABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FCB84B4-EE01-4855-B7F3-215C2959BABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FCB84B4-EE01-4855-B7F3-215C2959BABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FCB84B4-EE01-4855-B7F3-215C2959BABD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

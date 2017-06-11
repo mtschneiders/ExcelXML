@@ -1,14 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ExcelXML
 {
-    internal static class ConvertUtil
+    internal class ExcelHelper
     {
+        private static Dictionary<int, string> _columnNames = new Dictionary<int, string>();
+
+        public static string GetExcelColumnName(int columnNumber)
+        {
+            if (_columnNames.ContainsKey(columnNumber))
+                return _columnNames[columnNumber];
+
+            int dividend = columnNumber;
+            string columnName = String.Empty;
+            int modulo;
+
+            while (dividend > 0)
+            {
+                modulo = (dividend - 1) % 26;
+                columnName = Convert.ToChar(65 + modulo).ToString() + columnName;
+                dividend = (int)((dividend - modulo) / 26);
+            }
+
+            _columnNames.Add(columnNumber, columnName);
+
+            return columnName;
+        }
 
         /// <summary>
         /// OOXML requires that "," , and &amp; be escaped, but ' and " should *not* be escaped, nor should
@@ -19,7 +39,7 @@ namespace ExcelXML
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        internal static string ExcelEscapeString(string s)
+        public static string ExcelEscapeString(string s)
         {
             return s.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
         }
@@ -31,7 +51,7 @@ namespace ExcelXML
         /// <param name="t"></param>
         /// <param name="encodeTabCRLF"></param>
         /// <returns></returns>
-        internal static void ExcelEncodeString(StringBuilder sb, string t, bool encodeTabCRLF = false)
+        public static void ExcelEncodeString(StringBuilder sb, string t, bool encodeTabCRLF = false)
         {
             if (Regex.IsMatch(t, "(_x[0-9A-F]{4,4}_)"))
             {

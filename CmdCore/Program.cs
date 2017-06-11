@@ -7,12 +7,11 @@ namespace CmdCore
 {
     class Program
     {
-        private static string _basePath;
         static void Main(string[] args)
         {
-            string path = @"C:\Users\Mateus\Desktop\stuff\Book1.xlsx";
+            string path = Path.Combine(AppContext.BaseDirectory, "Template.xlsx");
             var tempBase = Path.Combine(AppContext.BaseDirectory, "tmp");
-            _basePath = Path.Combine(tempBase, Guid.NewGuid().ToString());
+            var basePath = Path.Combine(tempBase, Guid.NewGuid().ToString());
 
             int gen0 = GC.CollectionCount(0), gen1 = GC.CollectionCount(1), gen2 = GC.CollectionCount(2);
             var stopwatch = Stopwatch.StartNew();
@@ -26,7 +25,7 @@ namespace CmdCore
                     file.WriteRow(rowValues);
 
                 file.EndWritingData();
-                file.SaveAs(_basePath + ".xlsx");
+                file.SaveAs(basePath + ".xlsx");
             }
             Console.WriteLine(stopwatch.Elapsed);
             Console.WriteLine($"Gen0={GC.CollectionCount(0) - gen0} Gen1={GC.CollectionCount(1) - gen1} Gen2={GC.CollectionCount(2) - gen2}");

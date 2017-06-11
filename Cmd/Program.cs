@@ -1,63 +1,47 @@
-﻿using System;
+﻿using ExcelXML;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using ExcelXML;
-using System.Diagnostics;
 
 namespace Cmd
 {
     class Program
     {
-        private static string _basePath;
-        
-        public static void DoStuff()
+        private const string COSNT_RANDOM_STRING = "IODJSAOIJ@OIDJASOIJONOJBOPAINEPIOQBWNI";
+
+        static void Main(string[] args)
         {
-        }
-        
-        public static void Main(string[] args)
-        {
-            string path = @"C:\Users\Mateus\Desktop\stuff\Book1.xlsx";
+            Console.ReadLine();
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Template.xlsx");
             var tempBase = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tmp");
-            _basePath = Path.Combine(tempBase, Guid.NewGuid().ToString());
-            int gen0 = GC.CollectionCount(0), gen1 = GC.CollectionCount(1), gen2 = GC.CollectionCount(2);
-            var stopwatch = Stopwatch.StartNew();
+            string basePath = Path.Combine(tempBase, Guid.NewGuid().ToString());
             using (var file = ExcelFile.LoadFromTemplate(path))
             {
                 file.BeginWritingData();
-
-                List<List<object>> data = GetData();
-
-                foreach (var rowValues in data)
+                
+                foreach (var rowValues in GetData())
                     file.WriteRow(rowValues);
 
                 file.EndWritingData();
-                file.SaveAs(_basePath + ".xlsx");
+                file.SaveAs(basePath + ".xlsx");
             }
-            Console.WriteLine(stopwatch.Elapsed);
-            Console.WriteLine($"Gen0={GC.CollectionCount(0) - gen0} Gen1={GC.CollectionCount(1) - gen1} Gen2={GC.CollectionCount(2) - gen2}");
-            Console.Read();
+
+            Console.ReadLine();
         }
 
-        private static List<List<object>> GetData()
+        public static IEnumerable<List<object>> GetData()
         {
-            List<List<object>> data = new List<List<object>>();
-
             var random = new Random();
-            for (int i = 0; i < 100000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 int lineNumber = i + 3;
                 var x = random.Next(0, 10);
                 var y = Math.Round(random.NextDouble(), 2, MidpointRounding.AwayFromZero);
-                data.Add(new List<object>
+                yield return new List<object>
                 {
-                    x,"CD BLABLA BLA BLA BLA "+i, x,"REDE BLA BLA BLA BLA"+i,x,"BRAHMA LATA 350 BLA BLA BLACX12"+i,y,y,y,y,y,y, $"=(I{lineNumber}+J{lineNumber})*(H{lineNumber}/100)"
-                });
+                    x, COSNT_RANDOM_STRING+i, x, COSNT_RANDOM_STRING+i, x, COSNT_RANDOM_STRING+i, y, y, y, y, y, y, $"=(I{lineNumber}+J{lineNumber})*(H{lineNumber}/100)"
+                };
             }
-
-            return data;
         }
-        
     }
-
-
 }

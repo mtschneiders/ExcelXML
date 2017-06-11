@@ -6,7 +6,7 @@ using System.IO.Compression;
 using System.Text;
 using System.Xml.Linq;
 
-namespace ExcelXML
+namespace SimpleXL
 {
     public class ExcelFile : IDisposable
     {
@@ -38,7 +38,7 @@ namespace ExcelXML
 
         private void Load()
         {
-            ZipFile.ExtractToDirectory(_templatePath, _basePath);
+            ZipHelper.ExtractToDirectory(_templatePath, _basePath);
             LoadSharedStrings();
             LoadSheetSections();
         }
@@ -54,53 +54,64 @@ namespace ExcelXML
         public void WriteRow(List<object> values)
         {
             _currentRowCount++;
-            _streamWriter.Write($"<row r=\"{_currentRowCount}\">");
-
+            _streamWriter.Write("<row r=\"");
+            _streamWriter.Write(_currentRowCount);
+            _streamWriter.Write("\">");
+            
             for (int i = 0; i < values.Count; i++)
             {
                 object value = values[i];
-                int columnNumber = i + 1;
-                string columnName = ExcelUtil.GetExcelColumnName(columnNumber);
-                string r = $"{columnName}{_currentRowCount}";
-                _streamWriter.Write($"<c r=\"{r}\"");
+                string columnName = ExcelHelper.GetExcelColumnName(i + 1);
+                
+                _streamWriter.Write("<c r=\"");
+                _streamWriter.Write(columnName);
+                _streamWriter.Write(_currentRowCount);
+                _streamWriter.Write("\"");
 
                 if (value is string)
                     _streamWriter.Write(" t=\"s\"");
 
                 if (value is DateTime)
                     _streamWriter.Write(" s=\"1\"");
-                
+
                 _streamWriter.Write(">");
-
+                
                 if (value is string valueStr)
-                    _streamWriter.Write(GetStringValueTag(valueStr));
+                    WriteStringValueTag(_streamWriter, valueStr);
                 else if (value is DateTime valueDateTime)
-                    _streamWriter.Write(GetValueTag(valueDateTime.ToOADate()));
+                    WriteValueTag(_streamWriter, valueDateTime.ToOADate());
                 else if (value is double valueDouble)
-                    _streamWriter.Write(GetValueTag(valueDouble.ToString(CultureInfo.InvariantCulture)));
+                    WriteValueTag(_streamWriter, valueDouble.ToString(CultureInfo.InvariantCulture));
                 else if (value is decimal valueDecimal)
-                    _streamWriter.Write(GetValueTag(valueDecimal.ToString(CultureInfo.InvariantCulture)));
+                    WriteValueTag(_streamWriter, valueDecimal.ToString(CultureInfo.InvariantCulture));
                 else
-                    _streamWriter.Write(GetValueTag(value));
-
+                    WriteValueTag(_streamWriter, value);
+                    
                 _streamWriter.Write("</c>");
             }
+
             _streamWriter.Write("</row>");
         }
 
-        private string GetStringValueTag(string value)
+        private void WriteValueTag(StreamWriter writer, object value)
+        {
+            writer.Write("<v>");
+            writer.Write(value);
+            writer.Write("</v>");
+        }
+
+        private void WriteStringValueTag(StreamWriter writer, string value)
         {
             if (value.StartsWith("="))
-                return $"<f>{value}</f>";
-
-            return GetValueTag(_sharedStrings.GetValueOrNew(value));
+            {
+                writer.Write("<f>");
+                writer.Write(value);
+                writer.Write("</f>");
+            }
+            else
+                WriteValueTag(writer, _sharedStrings.GetValueOrNew(value));
         }
-
-        private string GetValueTag(object value)
-        {
-            return $"<v>{value}</v>";
-        }
-
+                
         public void EndWritingData()
         {
             _streamWriter.Write(_sheetDataFooter);
@@ -138,7 +149,7 @@ namespace ExcelXML
                     else
                         sw.Write("<si><t>");
 
-                    sw.Write(ConvertUtil.ExcelEscapeString(t));
+                    sw.Write(ExcelHelper.ExcelEscapeString(t));
                     sw.Write("</t></si>");
                 }
                 sw.Write("</sst>");
