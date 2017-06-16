@@ -260,6 +260,9 @@ namespace SimpleXL
         
         public void Dispose()
         {
+            if (Directory.Exists(_basePath))
+                new DirectoryInfo(_basePath).Delete(true);
+
             _basePath = null;
             _sharedStrings = null;
             _styles = null;

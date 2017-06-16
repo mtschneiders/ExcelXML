@@ -6,17 +6,19 @@ using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Attributes.Jobs;
 using System.Linq;
+using SimpleXL;
 
-namespace SimpleXL.Benchmark
+namespace Benchmark
 {
     [MemoryDiagnoser]
     [ShortRunJob]
     public class ExcelXMLBM
     {
         private List<List<object>> _data;
+        private string _tempDirectory;
         private const string COSNT_DUMMY_STRING = "IODJSAOIJ@OIDJASOIJONOJBOPAINEPIOQBWNI";
 
-        [Params(10000)]
+        [Params(10000, 100000)]
         public int NumRecords { get;set; }
 
         [Params(10)]
@@ -29,17 +31,22 @@ namespace SimpleXL.Benchmark
         public void GlobalSetup()
         {
             _data = GetData().ToList();
+            _tempDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tmp");
+
+            if (Directory.Exists(_tempDirectory))
+                new DirectoryInfo(_tempDirectory).Delete(true);
+
+            Directory.CreateDirectory(_tempDirectory);
         }
 
         [Benchmark]
-        public void ExportData()
+        public void SimpleXL()
         {
-            var tempBase = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tmp");
-            string basePath = Path.Combine(tempBase, Guid.NewGuid().ToString());
+            string filePath = Path.Combine(_tempDirectory, Guid.NewGuid().ToString());
             using (var file = new XLFile())
             {
                 file.WriteData(_data);
-                file.SaveAs(basePath + ".xlsx");
+                file.SaveAs(filePath + ".xlsx");
             }
         }
 
