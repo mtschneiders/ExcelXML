@@ -1,0 +1,24 @@
+<borders count="2">
+  <border>
+    <left/>
+    <right/>
+    <top/>
+    <bottom/>
+    <diagonal/>
+  </border>
+  <border>
+    <left style="thin">
+      <color indexed="64"/>
+    </left>
+    <right style="thin">
+      <color indexed="64"/>
+    </right>
+    <top style="thin">
+      <color indexed="64"/>
+    </top>
+    <bottom style="thin">
+      <color indexed="64"/>
+    </bottom>
+    <diagonal/>
+  </border>
+</borders>

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace SimpleXL
+namespace SimpleXL.Helpers
 {
     internal class ExcelHelper
     {
         private static Dictionary<int, string> _columnNames = new Dictionary<int, string>();
+        private static Dictionary<string, int> _columnNumbers = new Dictionary<string, int>();
 
         public static string GetExcelColumnName(int columnNumber)
         {
@@ -28,6 +29,24 @@ namespace SimpleXL
             _columnNames.Add(columnNumber, columnName);
 
             return columnName;
+        }
+        
+        public static int GetExcelColumnNumber(string columnName)
+        {
+            if (_columnNumbers.ContainsKey(columnName))
+                return _columnNumbers[columnName];
+
+            columnName = columnName.ToUpperInvariant();
+            int columnNumber = 0;
+            for (int i = 0; i < columnName.Length; i++)
+            {
+                columnNumber = columnNumber * 26;
+                columnNumber = columnNumber + (columnName[i] - 'A' + 1);
+            }
+
+            _columnNumbers.Add(columnName, columnNumber);
+
+            return columnNumber;
         }
 
         /// <summary>

@@ -10,13 +10,13 @@ using System.Linq;
 namespace SimpleXL.Benchmark
 {
     [MemoryDiagnoser]
-    [DryJob]
+    [ShortRunJob]
     public class ExcelXMLBM
     {
         private List<List<object>> _data;
         private const string COSNT_DUMMY_STRING = "IODJSAOIJ@OIDJASOIJONOJBOPAINEPIOQBWNI";
 
-        [Params(100000)]
+        [Params(10000)]
         public int NumRecords { get;set; }
 
         [Params(10)]
@@ -34,19 +34,11 @@ namespace SimpleXL.Benchmark
         [Benchmark]
         public void ExportData()
         {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Template.xlsx");
             var tempBase = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tmp");
             string basePath = Path.Combine(tempBase, Guid.NewGuid().ToString());
-            using (var file = ExcelFile.LoadFromTemplate(path))
+            using (var file = new XLFile())
             {
-                file.BeginWritingData();
-
-                foreach (var rowValues in _data)
-                {
-                    file.WriteRow(rowValues);
-                }
-                
-                file.EndWritingData();
+                file.WriteData(_data);
                 file.SaveAs(basePath + ".xlsx");
             }
         }

@@ -2,9 +2,9 @@
 using System.IO;
 using System.IO.Compression;
 
-namespace SimpleXL
+namespace SimpleXL.Helpers
 {
-    public static class ZipHelper
+    internal static class ZipHelper
     {
         /// <summary> Extract a zip file using a customized buffersize when reading the compressed files into memory
         /// </summary>
