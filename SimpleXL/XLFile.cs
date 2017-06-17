@@ -1,7 +1,6 @@
 ﻿using ExcelXML.Extensions;
 using SimpleXL.Extensions;
 using SimpleXL.Helpers;
-using SimpleXL.Properties;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -19,12 +18,16 @@ namespace SimpleXL
         private Dictionary<string, int> _sharedStrings = new Dictionary<string, int>();
         private Dictionary<XLRange, XLRangeConfig> _rangeConfigs = new Dictionary<XLRange, XLRangeConfig>();
         private List<XLStyle> _styles = new List<XLStyle>();
-        private int _currentRowCount;
 
         public XLFile()
         {
             _basePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            //_basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tmp", Guid.NewGuid().ToString());
+         
+            
+#if DEBUG
+            _basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tmp", Guid.NewGuid().ToString());
+#endif
+
             _styles.Add(new XLStyle());
         }
 
@@ -49,7 +52,7 @@ namespace SimpleXL
         public void WriteData(IEnumerable<List<object>> data)
         {
             EnsureFolderStructureIsCreated();
-
+            int rowNumber = 1;
             string sheet1File = GetWorksheetsFilePath("sheet1.xml");
             using (var fileStream = new FileStream(sheet1File, FileMode.Create, FileAccess.ReadWrite))
             using (var streamWriter = new StreamWriter(fileStream, Encoding.UTF8, DEFAULT_WRITE_BUFFER_SIZE))
@@ -61,7 +64,10 @@ namespace SimpleXL
                 streamWriter.Write("<sheetData>");
 
                 foreach (var values in data)
-                    WriteRow(streamWriter, values);
+                {
+                    WriteRow(streamWriter, values, rowNumber);
+                    rowNumber++;
+                }
 
                 streamWriter.Write("</sheetData>");
                 streamWriter.Write("<pageMargins left=\"0.7\" right=\"0.7\" top=\"0.75\" bottom=\"0.75\" header=\"0.3\" footer=\"0.3\"/>");
@@ -69,11 +75,10 @@ namespace SimpleXL
             }
         }
         
-        private void WriteRow(StreamWriter streamWriter, List<object> values)
+        private void WriteRow(StreamWriter streamWriter, List<object> values, int rowNumber)
         {
-            _currentRowCount++;
             streamWriter.Write("<row r=\"");
-            streamWriter.Write(_currentRowCount);
+            streamWriter.Write(rowNumber);
             streamWriter.Write("\">");
             
             for (int i = 0; i < values.Count; i++)
@@ -84,13 +89,13 @@ namespace SimpleXL
 
                 streamWriter.Write("<c r=\"");
                 streamWriter.Write(columnName);
-                streamWriter.Write(_currentRowCount);
+                streamWriter.Write(rowNumber);
                 streamWriter.Write("\"");
 
                 if (value is string)
                     streamWriter.Write(" t=\"s\"");
 
-                int? styleId = GetStyleId(columnNumber, _currentRowCount);
+                int? styleId = GetStyleId(columnNumber, rowNumber);
                 if (styleId.HasValue)
                 {
                     streamWriter.Write(" s=\"");
@@ -179,12 +184,15 @@ namespace SimpleXL
         {
             SaveSharedStrings();
             SaveStyles();
-            SaveCachedFiles();
+            SaveEmbeddedFiles();
             ZipFile.CreateFromDirectory(_basePath, filePath);
+
+#if RELEASE
             new DirectoryInfo(_basePath).Delete(true);
+#endif 
         }
         
-        private void SaveCachedFiles()
+        private void SaveEmbeddedFiles()
         {
             File.WriteAllText(Path.Combine(_basePath, "[Content_Types].xml"), Resources.Template_Content_Types_);
             File.WriteAllText(Path.Combine(_basePath, "_rels", ".rels"), Resources.Template_rels_rels);

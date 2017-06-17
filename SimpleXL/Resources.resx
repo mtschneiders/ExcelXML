@@ -118,31 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="styles_borders" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\styles_borders.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="styles_fonts" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\styles_fonts.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="Template_Content_Types_" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\template\[content_types].xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>resources\template\[content_types].xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Template_rels_rels" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\template\_rels\_.rels;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>resources\template\_rels\_.rels;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Template_docProps_app" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\template\docprops\app.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>resources\template\docprops\app.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Template_docProps_core" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\template\docprops\core.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>resources\template\docprops\core.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Template_xl_theme_theme1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\template\xl\theme\theme1.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>resources\template\xl\theme\theme1.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="Template_xl_workbook" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\template\xl\workbook.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>resources\template\xl\workbook.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Template_xl_rels_workbook" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\template\xl\_rels\workbook.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>resources\template\xl\_rels\workbook.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="styles_borders" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\styles_borders.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="styles_fonts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\styles_fonts.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>
