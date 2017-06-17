@@ -1,7 +1,11 @@
-# SimpleXL
+
+# SimpleXL 
 
 Simple Excel exporting utility focused on small memory footprint and performance.
 
+[![NuGet](https://img.shields.io/nuget/v/SimpleXL.svg)](https://www.nuget.org/packages/SimpleXL/)
+
+# Example
 ```
 using (var file = new XLFile())
 {
