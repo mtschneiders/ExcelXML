@@ -1,11 +1,11 @@
 
 # SimpleXL 
 
-Simple Excel exporting utility focused on small memory footprint and performance.
+Simple .NET library to export Excel (xlsx) files focused on small memory footprint and performance.
 
 [![NuGet](https://img.shields.io/nuget/v/SimpleXL.svg)](https://www.nuget.org/packages/SimpleXL/)
 
-# Example
+## Example
 ```
 using (var file = new XLFile())
 {
@@ -18,7 +18,7 @@ using (var file = new XLFile())
 }
 ```
 
-# Benchmark
+## Benchmark
 ``` ini
 
 BenchmarkDotNet=v0.10.8, OS=Windows 10 Redstone 1 (10.0.14393)
