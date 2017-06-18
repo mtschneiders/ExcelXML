@@ -4,6 +4,8 @@
 Simple .NET library to export Excel (xlsx) files focused on small memory footprint and performance.
 
 [![NuGet](https://img.shields.io/nuget/v/SimpleXL.svg)](https://www.nuget.org/packages/SimpleXL/)
+[![Build status](https://img.shields.io/appveyor/ci/mtschneiders/simplexl/master.svg?label=appveyor)](https://ci.appveyor.com/project/mtschneiders/simplexl/branch/master)
+
 
 ## Example
 ```
