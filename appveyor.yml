@@ -1,0 +1,24 @@
+version: '0.1.{build}'
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+# build platform, i.e. x86, x64, Any CPU. This setting is optional.
+platform: Any CPU
+
+# build Configuration, i.e. Debug, Release, etc.
+configuration: Release
+
+os: Visual Studio 2017
+
+before_build: 
+  -cmd: nuget restore
+
+build:
+  parallel: true                  # enable MSBuild parallel builds
+  project: SimpleXL.sln    # path to Visual Studio solution or project
+  
+skip_commits:
+  files:
+    - '**/*.md'

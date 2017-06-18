@@ -6,9 +6,10 @@
     <RootNamespace>SimpleXL</RootNamespace>
     <PackageId>SimpleXL</PackageId>
     <Authors>mtschneiders</Authors>
-    <Description>Simple Excel (xlsx) File expoting utility</Description>
+    <Description>Simple .NET library to export Excel (xlsx) files focused on small memory footprint and performance.</Description>
     <PackageVersion>0.1.2</PackageVersion>
     <PackageProjectUrl>https://github.com/mtschneiders/SimpleXL</PackageProjectUrl>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
