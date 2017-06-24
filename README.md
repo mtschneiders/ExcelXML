@@ -16,7 +16,7 @@ using (var file = new XLFile())
     
     IEnumerable<List<object>> data = GetData();
     file.WriteData(data);
-    file.SaveAs(basePath + ".xlsx");
+    file.SaveAs("C:\newfile.xlsx");
 }
 ```
 

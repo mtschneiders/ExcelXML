@@ -6,6 +6,9 @@ namespace SimpleXL
 {
     internal class XLRange
     {
+        private const int MAX_ROWS = 1048576;
+        private const int MAX_COLUMNS = 16384;
+
         public int StyleId { get; private set; }
         public string Address { get; private set; }
         public int ColumnNumberStart { get; private set; }
@@ -15,7 +18,7 @@ namespace SimpleXL
 
         public XLRange(string address, int styleId)
         {
-            string strRegex = @"^([a-zA-Z]*)([0-9]*):([a-zA-Z]*)([0-9]*)$";
+            string strRegex = @"^([a-zA-Z]{1,3})([0-9]{1,7}):([a-zA-Z]{1,3})([0-9]{1,7})$";
             Regex myRegex = new Regex(strRegex, RegexOptions.None);
             Match mtc = myRegex.Match(address);
 
@@ -33,6 +36,9 @@ namespace SimpleXL
             RowNumberEnd = Convert.ToInt32(rowNumberEnd);
             Address = address;
             StyleId = styleId;
+
+            if(RowNumberStart > MAX_ROWS || RowNumberEnd > MAX_ROWS || ColumnNumberStart > MAX_COLUMNS || ColumnNumberEnd > MAX_COLUMNS)
+                throw new ArgumentException($"Invalid range address: '{address}'");
         }
 
         public override int GetHashCode()
