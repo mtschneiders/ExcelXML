@@ -259,12 +259,12 @@ namespace SimpleXL
             SaveStyles();
             SaveEmbeddedFiles();
             _fileSystem.CreateZipFromDirectory(_temporaryBasePath, filePath);
-            
+
 #if RELEASE
-            new DirectoryInfo(_temporaryBasePath).Delete(true);
-#endif 
+            _fileSystem.DeleteDirectory(_temporaryBasePath);
+#endif
         }
-        
+
         private void SaveEmbeddedFiles()
         {
             _fileSystem.WriteAllText(Path.Combine(_temporaryBasePath, "[Content_Types].xml"), Resources.Template_Content_Types_);

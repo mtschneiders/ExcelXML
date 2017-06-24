@@ -85,6 +85,21 @@ namespace Tests
         }
 
         [Fact]
+        public void DeleteTempDirectory()
+        {
+            string basePath = @"C:\TempXLPath";
+            string folderName = "XLFolder";
+            var fileSystem = new VirtualFileSystem();
+            using (XLFile file = new XLFile(fileSystem, basePath, folderName))
+            {
+                string folderPath = Path.Combine(basePath, folderName);
+                string xlFile = @"C:\workbook.xlsx";
+                file.SaveAs(xlFile);
+                Assert.True(fileSystem.DeletedDirectories.Contains(folderPath));
+            }
+        }
+
+        [Fact]
         public void WriteWithNoData()
         {
             using (XLFile file = new XLFile())

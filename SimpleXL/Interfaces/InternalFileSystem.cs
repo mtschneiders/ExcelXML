@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.Compression;
 using System.Text;
 
@@ -18,5 +19,6 @@ namespace SimpleXL.Interfaces
         public void CreateZipFromDirectory(string sourceDirectoryName, string destinationArchiveFileName) => ZipFile.CreateFromDirectory(sourceDirectoryName, destinationArchiveFileName);
         public void CreateDirectory(string path) => Directory.CreateDirectory(path);
         public bool DirectoryExists(string path) => Directory.Exists(path);
+        public void DeleteDirectory(string path) => new DirectoryInfo(path).Delete(true);
     }
 }
