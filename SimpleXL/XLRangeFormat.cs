@@ -1,5 +1,4 @@
-﻿using SimpleXL.Attributes;
-namespace SimpleXL
+﻿namespace SimpleXL
 {
     public enum XLRangeFormat
     {
