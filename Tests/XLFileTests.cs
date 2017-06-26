@@ -100,9 +100,23 @@ namespace Tests
         }
 
         [Fact]
+        public void DeleteTempDirectoryOnDispose()
+        {
+            string basePath = @"C:\TempXLPath";
+            string folderName = "XLFolder";
+            string folderPath = Path.Combine(basePath, folderName);
+            var fileSystem = new VirtualFileSystem();
+            using (XLFile file = new XLFile(fileSystem, basePath, folderName))
+            {
+                file.WriteData(new List<List<object>> { new List<object> { 1 } });
+            }
+            Assert.True(fileSystem.DeletedDirectories.Contains(folderPath));
+        }
+
+        [Fact]
         public void WriteWithNoData()
         {
-            using (XLFile file = new XLFile())
+            using (XLFile file = new XLFile(new VirtualFileSystem()))
             {
                 Assert.Null(Record.Exception(() => file.WriteData(null)));
                 Assert.Null(Record.Exception(() => file.WriteData((DataTable)null)));
@@ -116,7 +130,7 @@ namespace Tests
         [Fact]
         public void ConfigureInvalidRanges()
         {
-            using (XLFile file = new XLFile())
+            using (XLFile file = new XLFile(new VirtualFileSystem()))
             {
                 Assert.Throws<ArgumentNullException>(() => file.ConfigureRange(null, null));
                 Assert.Throws<ArgumentNullException>(() => file.ConfigureRange(string.Empty, null));
@@ -142,7 +156,7 @@ namespace Tests
         [Fact]
         public void ConfigureValidRanges()
         {
-            using (XLFile file = new XLFile())
+            using (XLFile file = new XLFile(new VirtualFileSystem()))
             {
                 Assert.Null(Record.Exception(() => file.ConfigureRange("A1:B1", new XLRangeConfig())));
                 Assert.Null(Record.Exception(() => file.ConfigureRange("A11:B11", new XLRangeConfig())));

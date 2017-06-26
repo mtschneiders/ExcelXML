@@ -13,7 +13,7 @@ namespace SimpleXL
 {
     /// <summary> Class responsible for building and saving Excel Files
     /// </summary>
-    public class XLFile : IDisposable
+    public sealed class XLFile : IDisposable
     {
         private string _temporaryBasePath;
         private Dictionary<string, int> _sharedStrings = new Dictionary<string, int>();
@@ -24,7 +24,6 @@ namespace SimpleXL
         /// <summary> Creates a new XLFile instance
         /// </summary>
         public XLFile() : this(new InternalFileSystem()) { }
-
         internal XLFile(IFileSystem fileSystem) : this(fileSystem, GetBasePath(), Guid.NewGuid().ToString()) { }
         internal XLFile(IFileSystem fileSystem, string basePath, string folderName)
         {
@@ -217,11 +216,11 @@ namespace SimpleXL
             if (config == null)
                 throw new ArgumentNullException(nameof(config));
             
-            int styleId = AddNewRangeStyle(config);
+            int styleId = GetOrAddRangeStyle(config);
             _rangeConfigs[new XLRange(range, styleId)] = config;
         }
 
-        private int AddNewRangeStyle(XLRangeConfig config)
+        private int GetOrAddRangeStyle(XLRangeConfig config)
         {
             for (int i = 0; i < _styles.Count; i++)
             {
@@ -342,14 +341,15 @@ namespace SimpleXL
         public void Dispose()
         {
 #if RELEASE
-            if (Directory.Exists(_temporaryBasePath))
-                new DirectoryInfo(_temporaryBasePath).Delete(true);
+            if (_fileSystem.DirectoryExists(_temporaryBasePath))
+                _fileSystem.DeleteDirectory(_temporaryBasePath);
 #endif 
 
             _temporaryBasePath = null;
             _sharedStrings = null;
             _styles = null;
             _rangeConfigs = null;
+            _fileSystem = null;
         }
     }
 }
